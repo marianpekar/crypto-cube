@@ -1,10 +1,12 @@
 # Crypto Cube
 
-See how bitcoin was riding from 17th of September 2013 (or use optional URL parameters, the earliest possible date is 2010-07-17) to yeasterday on an animated cube that scales according to BTC/USD rates day by day. 
+See how bitcoin was riding from 17th of September 2013 (or **use optional URL parameters, the earliest possible date is 2010-07-17**) to yeasterday on an animated cube that scales according to BTC/USD rates day by day. 
 
 See it working at [https://marianpekar.github.io/crypto-cube/](https://marianpekar.github.io/crypto-cube/)
 
-Parametrized URL example: [https://marianpekar.github.io/crypto-cube/?start=2017-12-01&end=2017-12-31&speed=2](https://marianpekar.github.io/crypto-cube/?start=2017-12-01&end=2017-12-31&speed=2)
+Parametrized URL examples: 
+[https://marianpekar.github.io/crypto-cube/?start=2017-12-01&end=2017-12-31&speed=2](https://marianpekar.github.io/crypto-cube/?start=2017-12-01&end=2017-12-31&speed=2)
+[https://marianpekar.github.io/crypto-cube/?start=2010-07-17&speed=250](https://marianpekar.github.io/crypto-cube/?start=2010-07-17&speed=500)
 
 *This microproject is powered by THREE.js*. In case you've never heard of this JS library, I suggest you to visit [threejs.org](https://threejs.org/) where you can find more about this awesome library plus a lot of way much cooler examples of usage than in this humble repository.
 
