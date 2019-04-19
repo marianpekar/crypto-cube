@@ -1,6 +1,6 @@
 const FOV = 75;
 const SCENE_BG_COLOR = new THREE.Color( 0xcacaca );
-const BITCUBE_COLOR = new THREE.Color( 0xfafafa );   
+//const BITCUBE_COLOR = new THREE.Color( 0xfafafa );   
 const ROTATION_SPEED = 0.01;
 const UPDATE_PRICE_INTERVAL = 60; // miliseconds
 const API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";
@@ -93,7 +93,8 @@ function addLights() {
 
 function addBitCube() {
     let geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    let material = new THREE.MeshBasicMaterial( { color: BITCUBE_COLOR } );
+    let material = new THREE.MeshNormalMaterial();
+    //let material = new THREE.MeshBasicMaterial( { color: BITCUBE_COLOR } );
     cube = new THREE.Mesh( geometry, material ); 
     scene.add( cube );
 }
