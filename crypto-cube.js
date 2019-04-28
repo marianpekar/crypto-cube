@@ -4,7 +4,7 @@ const SCENE_BG_COLOR = new THREE.Color( 0xcacaca );
 const ROTATION_SPEED = 0.01;
 const API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";
 
-let scene, camera, cameraZPosition, renderer, cube, lastPrice = 0, price = 0;
+let scene, camera, cameraZPosition, renderer, cube, lastPrice = 0, price = 0, animationDone = false;
 
 let clock = new THREE.Clock();
 
@@ -140,7 +140,7 @@ function startUpdatingValues() {
     window.setInterval( function() {
 
         if( i >= btcPrices.length ) {
-            lastPrice = price;
+            animationDone = true;
             return;
         }
 
@@ -167,7 +167,8 @@ function scaleCube() {
 function animate() {
     requestAnimationFrame( animate );
 
-    scaleCube();
+    if(!animationDone)
+        scaleCube();
 
     cube.rotation.x += ROTATION_SPEED;
     cube.rotation.y += ROTATION_SPEED;
