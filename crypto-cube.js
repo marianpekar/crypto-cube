@@ -4,7 +4,9 @@ const SCENE_BG_COLOR = new THREE.Color( 0xcacaca );
 const ROTATION_SPEED = 0.01;
 const API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";
 
-let scene, camera, cameraZPosition, renderer, cube, scaler = 0;
+let scene, camera, cameraZPosition, renderer, cube, lastPrice = 0, price = 0;
+
+let clock = new THREE.Clock();
 
 let width = window.innerWidth;
 let height = window.innerHeight;
@@ -129,27 +131,43 @@ function addBitCube() {
 }
 
 function updateText(i) {
-    infoText = `1 BTC = USD ${ scaler.toFixed( 2 ) } \n ${ btcDates[ i ] }`;
+    infoText = `1 BTC = USD ${ price.toFixed( 2 ) } \n ${ btcDates[ i ] }`;
     document.getElementById( "info-text" ).innerText = infoText;
 }
 
 function startUpdatingValues() {
-    let i = 0;
+    let i = 1;
     window.setInterval( function() {
 
-        if( i >= btcPrices.length )
+        if( i >= btcPrices.length ) {
+            lastPrice = price;
             return;
+        }
 
-        scaler = btcPrices[ i ];
-        cube.scale.set( scaler, scaler, scaler );
+        price = btcPrices[ i ];
+        lastPrice =  btcPrices[ i - 1 ];
         updateText( i );
 
         i++;
     }, 1000 * 1 / animationSpeed );
 }
 
+function scaleCube() {
+    let targetSize = price;
+    let startSize = lastPrice;
+
+    let uniformT = clock.getElapsedTime() % 1.00;
+    let t = ( uniformT * animationSpeed ) % 1.00;
+
+    let scaler = THREE.Math.lerp( startSize, targetSize, t );
+
+    cube.scale.set( scaler, scaler, scaler );
+}
+
 function animate() {
     requestAnimationFrame( animate );
+
+    scaleCube();
 
     cube.rotation.x += ROTATION_SPEED;
     cube.rotation.y += ROTATION_SPEED;
