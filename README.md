@@ -6,7 +6,7 @@ See it working at [https://marianpekar.github.io/crypto-cube/](https://marianpek
 
 Parametrized URL examples: 
 [https://marianpekar.github.io/crypto-cube/?start=2017-12-01&end=2017-12-31&speed=2](https://marianpekar.github.io/crypto-cube/?start=2017-12-01&end=2017-12-31&speed=2)
-[https://marianpekar.github.io/crypto-cube/?start=2010-07-17&speed=250](https://marianpekar.github.io/crypto-cube/?start=2010-07-17&speed=250)
+[https://marianpekar.github.io/crypto-cube/?start=2014-01-01&end=2018-12-31&speed=50](https://marianpekar.github.io/crypto-cube/?start=2014-01-01&end=2018-12-31&speed=50)
 
 *This microproject is powered by THREE.js*. In case you've never heard of this JS library, I suggest you to visit [threejs.org](https://threejs.org/) where you can find more about this awesome library plus a lot of way much cooler examples of usage than in this humble repository.
 
