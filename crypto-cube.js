@@ -1,12 +1,14 @@
 const FOV = 75;
 const SCENE_BG_COLOR = new THREE.Color( 0xcacaca );
 //const BITCUBE_COLOR = new THREE.Color( 0xfafafa );   
-const ROTATION_SPEED = 0.01;
+const ROTATION_SPEED = 0.0033;
 const API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";
 
-let scene, camera, cameraZPosition, renderer, cube, lastPrice = 0, price = 0, animationDone = false;
+// Make everything smaller by the same factor, so from the PoV everything looks the same but actual sizes and distances are smaller.
+// Reason: avoid cube jittering when camera is too far from the origin
+const OVERALL_SCALE_FACTOR = 0.1;
 
-let clock = new THREE.Clock();
+let scene, camera, cameraZPosition, renderer, cube, lastPrice = 0, price = 0, animationDone = false;
 
 let width = window.innerWidth;
 let height = window.innerHeight;
@@ -14,6 +16,7 @@ let windowHalf = new THREE.Vector2( width / 2, height / 2 );
 
 let btcPrices = [], btcDates = [];
 
+let clock = new THREE.Clock();
 let animationSpeed;
 
 function init() {
@@ -113,7 +116,7 @@ function setCamera() {
     cameraZPosition = Math.max.apply(null, btcPrices);
     camera = new THREE.PerspectiveCamera( FOV, width/height, 0.001, 2 * cameraZPosition);
     // Camera position is 1 and a 1/2 units in meaning of 1 unit = maximal size of 'BitCube' = the biggest price in fetched data
-    camera.position.z = cameraZPosition + cameraZPosition / 2;
+    camera.position.z = (cameraZPosition + cameraZPosition / 2) * OVERALL_SCALE_FACTOR;
     camera.updateProjectionMatrix();
 }
 
@@ -152,27 +155,29 @@ function startUpdatingValues() {
     }, 1000 * 1 / animationSpeed );
 }
 
-function scaleCube() {
-    let targetSize = price;
-    let startSize = lastPrice;
-
+function scaleCube(targetSize, startSize) {
     let uniformT = clock.getElapsedTime() % 1.00;
     let t = ( uniformT * animationSpeed ) % 1.00;
 
     let scaler = THREE.Math.lerp( startSize, targetSize, t );
+    scaler *= OVERALL_SCALE_FACTOR;
 
     cube.scale.set( scaler, scaler, scaler );
+}
+
+function rotateCube() {
+    cube.rotateX( ROTATION_SPEED );
+    cube.rotateY( ROTATION_SPEED );
+    cube.rotateZ( ROTATION_SPEED );
 }
 
 function animate() {
     requestAnimationFrame( animate );
 
-    if(!animationDone)
-        scaleCube();
+    rotateCube();
 
-    cube.rotation.x += ROTATION_SPEED;
-    cube.rotation.y += ROTATION_SPEED;
-    cube.rotation.z += ROTATION_SPEED;
+    if(!animationDone)
+        scaleCube(price, lastPrice);
 
     renderer.render( scene, camera );
 }
