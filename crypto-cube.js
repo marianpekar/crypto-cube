@@ -6,7 +6,7 @@ const API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";
 
 // Make everything smaller by the same factor, so from the PoV everything looks the same but actual sizes and distances are smaller.
 // Reason: avoid cube jittering when camera is too far from the origin
-const OVERALL_SCALE_FACTOR = 0.1;
+const OVERALL_SCALE_FACTOR = 0.00005;
 
 let scene, camera, cameraZPosition, renderer, cube, lastPrice = 0, price = 0, animationDone = false;
 
@@ -161,6 +161,8 @@ function scaleCube(targetSize, startSize) {
 
     let scaler = THREE.Math.lerp( startSize, targetSize, t );
     scaler *= OVERALL_SCALE_FACTOR;
+
+    scaler = Math.cbrt(scaler);
 
     cube.scale.set( scaler, scaler, scaler );
 }
